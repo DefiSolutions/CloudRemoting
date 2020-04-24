@@ -32,7 +32,13 @@ function Get-RandomEc2InstanceForDemo {
 }
 
 # Import modules
-Import-Module AWSPowerShell
+if (Get-Module AWS.Tools.Common -ListAvailable) {
+    Import-Module AWS.Tools.Common
+} elseif (Get-Module AWSPowerShell.NetCore -ListAvailable) {
+    Import-Module AWSPowerShell.NetCore
+} elseif (Get-Module AWSPowershell -ListAvailable) {
+    Import-Module AWSPowershell
+}
 Remove-Module CloudRemoting -ErrorAction SilentlyContinue
 Import-Module (Split-Path $PSScriptRoot -Parent) # CloudRemoting
 
